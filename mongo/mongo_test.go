@@ -3,9 +3,9 @@ package mongo
 import (
 	"testing"
 
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/tester"
 	"github.com/globalsign/mgo"
+	"github.com/libra9z/sessions"
+	"github.com/libra9z/sessions/tester"
 )
 
 const mongoTestServer = "localhost:27017"

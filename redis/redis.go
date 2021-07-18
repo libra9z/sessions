@@ -3,9 +3,9 @@ package redis
 import (
 	"errors"
 
-	"github.com/boj/redistore"
-	"github.com/gin-contrib/sessions"
-	"github.com/gomodule/redigo/redis"
+	"github.com/go-redis/redis/v8"
+	"github.com/libra9z/redistore"
+	"github.com/libra9z/sessions"
 )
 
 type Store interface {
@@ -25,8 +25,8 @@ type Store interface {
 //
 // It is recommended to use an authentication key with 32 or 64 bytes. The encryption key,
 // if set, must be either 16, 24, or 32 bytes to select AES-128, AES-192, or AES-256 modes.
-func NewStore(size int, network, address, password string, keyPairs ...[]byte) (Store, error) {
-	s, err := redistore.NewRediStore(size, network, address, password, keyPairs...)
+func NewStore(size int, network, address, username, password, mode, mastername string, keyPairs ...[]byte) (Store, error) {
+	s, err := redistore.NewRediStore(size, address, username, password, mode, mastername, keyPairs...)
 	if err != nil {
 		return nil, err
 	}
@@ -36,9 +36,8 @@ func NewStore(size int, network, address, password string, keyPairs ...[]byte) (
 // NewStoreWithDB - like NewStore but accepts `DB` parameter to select
 // redis DB instead of using the default one ("0")
 //
-// Ref: https://godoc.org/github.com/boj/redistore#NewRediStoreWithDB
-func NewStoreWithDB(size int, network, address, password, DB string, keyPairs ...[]byte) (Store, error) {
-	s, err := redistore.NewRediStoreWithDB(size, network, address, password, DB, keyPairs...)
+func NewStoreWithDB(size, db int, address, username, password, mode, mastername string, keyPairs ...[]byte) (Store, error) {
+	s, err := redistore.NewRediStoreWithDB(size, db, address, username, password, mode, password, keyPairs...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +47,7 @@ func NewStoreWithDB(size int, network, address, password, DB string, keyPairs ..
 // NewStoreWithPool instantiates a RediStore with a *redis.Pool passed in.
 //
 // Ref: https://godoc.org/github.com/boj/redistore#NewRediStoreWithPool
-func NewStoreWithPool(pool *redis.Pool, keyPairs ...[]byte) (Store, error) {
+func NewStoreWithPool(pool *redis.Client, keyPairs ...[]byte) (Store, error) {
 	s, err := redistore.NewRediStoreWithPool(pool, keyPairs...)
 	if err != nil {
 		return nil, err

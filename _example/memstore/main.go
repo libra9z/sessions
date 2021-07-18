@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/memstore"
 	"github.com/gin-gonic/gin"
+	"github.com/libra9z/sessions"
+	"github.com/libra9z/sessions/memstore"
 )
 
 func main() {

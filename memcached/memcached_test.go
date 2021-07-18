@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/bradfitz/gomemcache/memcache"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/tester"
+	"github.com/libra9z/sessions"
+	"github.com/libra9z/sessions/tester"
 	"github.com/memcachier/mc"
 )
 

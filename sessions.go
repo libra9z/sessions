@@ -4,13 +4,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
+	"github.com/libra9z/mskit/rest"
 )
 
 const (
-	DefaultKey  = "github.com/gin-contrib/sessions"
+	DefaultKey  = "github.com/libra9z/sessions"
 	errorFormat = "[sessions] ERROR! %s\n"
 )
 
@@ -46,8 +46,8 @@ type Session interface {
 	Save() error
 }
 
-func Sessions(name string, store Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func Sessions(name string, store Store) rest.HandlerFunc {
+	return func(c *rest.Context) {
 		s := &session{name, c.Request, store, nil, false, c.Writer}
 		c.Set(DefaultKey, s)
 		defer context.Clear(c.Request)
@@ -55,8 +55,8 @@ func Sessions(name string, store Store) gin.HandlerFunc {
 	}
 }
 
-func SessionsMany(names []string, store Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func SessionsMany(names []string, store Store) rest.HandlerFunc {
+	return func(c *rest.Context) {
 		sessions := make(map[string]Session, len(names))
 		for _, name := range names {
 			sessions[name] = &session{name, c.Request, store, nil, false, c.Writer}
@@ -141,11 +141,11 @@ func (s *session) Written() bool {
 }
 
 // shortcut to get session
-func Default(c *gin.Context) Session {
+func Default(c *rest.Context) Session {
 	return c.MustGet(DefaultKey).(Session)
 }
 
 // shortcut to get session with given name
-func DefaultMany(c *gin.Context, name string) Session {
+func DefaultMany(c *rest.Context, name string) Session {
 	return c.MustGet(DefaultKey).(map[string]Session)[name]
 }
