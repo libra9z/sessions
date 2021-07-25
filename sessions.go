@@ -1,12 +1,14 @@
 package sessions
 
 import (
-	"log"
-	"net/http"
-
+	osc "context"
+	"errors"
+	"github.com/go-kit/kit/endpoint"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/libra9z/mskit/rest"
+	"log"
+	"net/http"
 )
 
 const (
@@ -46,24 +48,38 @@ type Session interface {
 	Save() error
 }
 
-func Sessions(name string, store Store) rest.HandlerFunc {
-	return func(c *rest.Context) {
-		s := &session{name, c.Request, store, nil, false, c.Writer}
-		c.Set(DefaultKey, s)
-		defer context.Clear(c.Request)
-		c.Next()
+func Sessions(name string, store Store) rest.Middleware {
+	return func(next endpoint.Endpoint) endpoint.Endpoint {
+		return func(ctx osc.Context, request interface{}) (interface{}, error) {
+			if request == nil {
+				return nil, errors.New("no request avaliable.")
+			}
+			c := request.(*rest.Mcontext)
+			s := &session{name, c.Request, store, nil, false, c.Writer}
+			c.Set(DefaultKey, s)
+			defer context.Clear(c.Request)
+
+			return next(ctx, c)
+		}
 	}
 }
 
-func SessionsMany(names []string, store Store) rest.HandlerFunc {
-	return func(c *rest.Context) {
-		sessions := make(map[string]Session, len(names))
-		for _, name := range names {
-			sessions[name] = &session{name, c.Request, store, nil, false, c.Writer}
+func SessionsMany(names []string, store Store) rest.Middleware {
+	return func(next endpoint.Endpoint) endpoint.Endpoint {
+		return func(ctx osc.Context, request interface{}) (interface{}, error) {
+			if request == nil {
+				return nil, errors.New("no request avaliable.")
+			}
+			c := request.(*rest.Mcontext)
+			sessions := make(map[string]Session, len(names))
+			for _, name := range names {
+				sessions[name] = &session{name, c.Request, store, nil, false, c.Writer}
+			}
+			c.Set(DefaultKey, sessions)
+			defer context.Clear(c.Request)
+
+			return next(ctx, c)
 		}
-		c.Set(DefaultKey, sessions)
-		defer context.Clear(c.Request)
-		c.Next()
 	}
 }
 
@@ -141,11 +157,11 @@ func (s *session) Written() bool {
 }
 
 // shortcut to get session
-func Default(c *rest.Context) Session {
+func Default(c *rest.Mcontext) Session {
 	return c.MustGet(DefaultKey).(Session)
 }
 
 // shortcut to get session with given name
-func DefaultMany(c *rest.Context, name string) Session {
+func DefaultMany(c *rest.Mcontext, name string) Session {
 	return c.MustGet(DefaultKey).(map[string]Session)[name]
 }
