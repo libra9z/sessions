@@ -3,7 +3,6 @@ package redis
 import (
 	"errors"
 
-	"github.com/go-redis/redis/v8"
 	"github.com/libra9z/redistore"
 	"github.com/libra9z/sessions"
 )
@@ -38,17 +37,6 @@ func NewStore(size int, network, address, username, password, mode, mastername s
 //
 func NewStoreWithDB(size, db int, address, username, password, mode, mastername string, keyPairs ...[]byte) (Store, error) {
 	s, err := redistore.NewRediStoreWithDB(size, db, address, username, password, mode, password, keyPairs...)
-	if err != nil {
-		return nil, err
-	}
-	return &store{s}, nil
-}
-
-// NewStoreWithPool instantiates a RediStore with a *redis.Pool passed in.
-//
-// Ref: https://godoc.org/github.com/boj/redistore#NewRediStoreWithPool
-func NewStoreWithPool(pool *redis.Client, keyPairs ...[]byte) (Store, error) {
-	s, err := redistore.NewRediStoreWithPool(pool, keyPairs...)
 	if err != nil {
 		return nil, err
 	}
