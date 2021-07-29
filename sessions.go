@@ -3,7 +3,7 @@ package sessions
 import (
 	osc "context"
 	"errors"
-	"github.com/go-kit/kit/endpoint"
+	"github.com/libra9z/mskit/endpoint"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/libra9z/mskit/rest"
