@@ -1,9 +1,6 @@
 package sessions
 
 import (
-	osc "context"
-	"errors"
-	"github.com/libra9z/mskit/endpoint"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/libra9z/mskit/rest"
@@ -48,38 +45,31 @@ type Session interface {
 	Save() error
 }
 
-func Sessions(name string, store Store) rest.Middleware {
-	return func(next endpoint.Endpoint) endpoint.Endpoint {
-		return func(ctx osc.Context, request interface{}) (interface{}, error) {
-			if request == nil {
-				return nil, errors.New("no request avaliable.")
-			}
-			c := request.(*rest.Mcontext)
-			s := &session{name, c.Request, store, nil, false, c.Writer}
-			c.Set(DefaultKey, s)
-			defer context.Clear(c.Request)
-
-			return next(ctx, c)
+func Sessions(name string, store Store) rest.BeforeFunc {
+	return func(mc *rest.Mcontext, w http.ResponseWriter) {
+		if mc == nil {
+			return
 		}
+		c := mc
+		s := &session{name, c.Request, store, nil, false, c.Writer}
+		c.Set(DefaultKey, s)
+		defer context.Clear(c.Request)
+
 	}
 }
 
-func SessionsMany(names []string, store Store) rest.Middleware {
-	return func(next endpoint.Endpoint) endpoint.Endpoint {
-		return func(ctx osc.Context, request interface{}) (interface{}, error) {
-			if request == nil {
-				return nil, errors.New("no request avaliable.")
-			}
-			c := request.(*rest.Mcontext)
-			sessions := make(map[string]Session, len(names))
-			for _, name := range names {
-				sessions[name] = &session{name, c.Request, store, nil, false, c.Writer}
-			}
-			c.Set(DefaultKey, sessions)
-			defer context.Clear(c.Request)
-
-			return next(ctx, c)
+func SessionsMany(names []string, store Store) rest.BeforeFunc {
+	return func(mc *rest.Mcontext, w http.ResponseWriter) {
+		if mc == nil {
+			return
 		}
+		c := mc
+		sess := make(map[string]Session, len(names))
+		for _, name := range names {
+			sess[name] = &session{name, c.Request, store, nil, false, c.Writer}
+		}
+		c.Set(DefaultKey, sess)
+		defer context.Clear(c.Request)
 	}
 }
 
