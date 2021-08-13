@@ -9,8 +9,10 @@ require (
 	github.com/gorilla/context v1.1.1
 	github.com/gorilla/sessions v1.2.1
 	github.com/kidstuff/mongostore v0.0.0-20181113001930-e650cd85ee4b
-	github.com/libra9z/mskit v0.0.0-20210801125935-b3a7241e8c8b
+	github.com/libra9z/mskit v0.0.0-00010101000000-000000000000
 	github.com/libra9z/redistore v1.3.2
 	github.com/memcachier/mc v2.0.1+incompatible // indirect
 	github.com/quasoft/memstore v0.0.0-20191010062613-2bce066d2b0b
 )
+
+replace github.com/libra9z/mskit => ../mskit

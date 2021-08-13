@@ -45,7 +45,7 @@ type Session interface {
 	Save() error
 }
 
-func Sessions(name string, store Store) rest.BeforeFunc {
+func Sessions(name string, store Store) rest.MskitFunc {
 	return func(mc *rest.Mcontext, w http.ResponseWriter) {
 		if mc == nil {
 			return
@@ -58,7 +58,7 @@ func Sessions(name string, store Store) rest.BeforeFunc {
 	}
 }
 
-func SessionsMany(names []string, store Store) rest.BeforeFunc {
+func SessionsMany(names []string, store Store) rest.MskitFunc {
 	return func(mc *rest.Mcontext, w http.ResponseWriter) {
 		if mc == nil {
 			return
