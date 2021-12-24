@@ -3,7 +3,7 @@ package sessions
 import (
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
-	"github.com/libra9z/mskit/rest"
+	"github.com/libra9z/mskit/v4/rest"
 	"log"
 	"net/http"
 )
