@@ -387,8 +387,8 @@ github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042/go.mod h1:TPp
 github.com/libra9z/httprouter v1.2.2 h1:rN3IFRLoWw8C+koxvbsKfH70Keop/TPjUvq1MJwOYq8=
 github.com/libra9z/httprouter v1.2.2/go.mod h1:Qh/uVG+xOf5O/Fc0HQaL7FhkIuEnEQiPgUWxbHSuqqI=
 github.com/libra9z/mahonia v0.0.0-20150731031913-6d9f3cf9f957/go.mod h1:btkpW9KU/nZVcbIoXLa79V1m3M0qff/a1UDyo2PFXDM=
-github.com/libra9z/mskit/v4 v4.0.9 h1:tHe9nosYRnwOw7rNWJ4a1NU2pfBwdnwWDuIq5iXCOKw=
-github.com/libra9z/mskit/v4 v4.0.9/go.mod h1:bxPPZnYpRXYztRTMd3xdfQNvYuk6zbp/vOwboAT4GuA=
+github.com/libra9z/mskit/v4 v4.0.10 h1:ns1ocNJn5jvsfgmko76GQCIzYSoSrvdVllJ5BF8OOS8=
+github.com/libra9z/mskit/v4 v4.0.10/go.mod h1:bxPPZnYpRXYztRTMd3xdfQNvYuk6zbp/vOwboAT4GuA=
 github.com/libra9z/redistore v1.3.2 h1:RxvOhq7hBfrFktFMlxhUhilwfTTjoKTKfM+vpBG/Swk=
 github.com/libra9z/redistore v1.3.2/go.mod h1:Li2FJBlQ3nziESrWPcY1RUjS4jJHMUMJuOMPSAJO0t8=
 github.com/libra9z/utils v1.0.3/go.mod h1:5cQnBEUl0M02o8VFprSxYEtuzlO0kDXxSo+uFa70hTo=
