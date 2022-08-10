@@ -1,6 +1,7 @@
 package sessions
 
 import (
+	"errors"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/libra9z/mskit/v4/rest"
@@ -46,22 +47,22 @@ type Session interface {
 }
 
 func Sessions(name string, store Store) rest.MskitFunc {
-	return func(mc *rest.Mcontext, w http.ResponseWriter) {
+	return func(mc *rest.Mcontext, w http.ResponseWriter) error {
 		if mc == nil {
-			return
+			return errors.New("mcontext is nil")
 		}
 		c := mc
 		s := &session{name, c.Request, store, nil, false, c.Writer}
 		c.Set(DefaultKey, s)
 		defer context.Clear(c.Request)
-
+		return nil
 	}
 }
 
 func SessionsMany(names []string, store Store) rest.MskitFunc {
-	return func(mc *rest.Mcontext, w http.ResponseWriter) {
+	return func(mc *rest.Mcontext, w http.ResponseWriter) error {
 		if mc == nil {
-			return
+			return errors.New("mcontext is nil")
 		}
 		c := mc
 		sess := make(map[string]Session, len(names))
@@ -70,6 +71,7 @@ func SessionsMany(names []string, store Store) rest.MskitFunc {
 		}
 		c.Set(DefaultKey, sess)
 		defer context.Clear(c.Request)
+		return nil
 	}
 }
 
