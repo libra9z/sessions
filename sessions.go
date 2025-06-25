@@ -1,12 +1,14 @@
 package sessions
 
 import (
+	"context"
 	"errors"
-	"github.com/gorilla/context"
-	"github.com/gorilla/sessions"
-	"github.com/libra9z/mskit/v4/rest"
 	"log"
 	"net/http"
+
+	gcontext "github.com/gorilla/context"
+	"github.com/gorilla/sessions"
+	"github.com/libra9z/mskit/v4/rest"
 )
 
 const (
@@ -47,20 +49,23 @@ type Session interface {
 }
 
 func Sessions(name string, store Store) rest.MskitFunc {
-	return func(mc *rest.Mcontext, w http.ResponseWriter) error {
+	return func(ctx context.Context, w http.ResponseWriter) error {
+		mc := ctx.Value(rest.DefaultContextKey).(*rest.Mcontext)
 		if mc == nil {
 			return errors.New("mcontext is nil")
 		}
 		c := mc
 		s := &session{name, c.Request, store, nil, false, c.Writer}
 		c.Set(DefaultKey, s)
-		defer context.Clear(c.Request)
+		defer gcontext.Clear(c.Request)
 		return nil
 	}
 }
 
 func SessionsMany(names []string, store Store) rest.MskitFunc {
-	return func(mc *rest.Mcontext, w http.ResponseWriter) error {
+	return func(ctx context.Context, w http.ResponseWriter) error {
+		mc := ctx.Value(rest.DefaultContextKey).(*rest.Mcontext)
+
 		if mc == nil {
 			return errors.New("mcontext is nil")
 		}
@@ -70,7 +75,7 @@ func SessionsMany(names []string, store Store) rest.MskitFunc {
 			sess[name] = &session{name, c.Request, store, nil, false, c.Writer}
 		}
 		c.Set(DefaultKey, sess)
-		defer context.Clear(c.Request)
+		defer gcontext.Clear(c.Request)
 		return nil
 	}
 }
