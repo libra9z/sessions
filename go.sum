@@ -89,8 +89,8 @@ github.com/libra9z/httprouter v1.2.2 h1:rN3IFRLoWw8C+koxvbsKfH70Keop/TPjUvq1MJwO
 github.com/libra9z/httprouter v1.2.2/go.mod h1:Qh/uVG+xOf5O/Fc0HQaL7FhkIuEnEQiPgUWxbHSuqqI=
 github.com/libra9z/log4go v1.0.2 h1:tl9HQI5gL9vtg1qlh8xoTsLorzubvf87uUdGm3I5nug=
 github.com/libra9z/log4go v1.0.2/go.mod h1:XY7IDg/nhSD6AW79t/qCQqlUmOR8z1gDZ9G0w3AdDLo=
-github.com/libra9z/mskit/v4 v4.3.0 h1:SZRWmDbFBe15gdHMkGNlAXQxRGoI7OtNxz9rwxZstfM=
-github.com/libra9z/mskit/v4 v4.3.0/go.mod h1:Yjla5H7FlLz/Y6zFIzGZY4iomYtOTXnnCnpETnWPFC0=
+github.com/libra9z/mskit/v4 v4.3.6 h1:6ZUd7P2ikaLm5cseGVadGaS1EMFHvgKMvFRw9o0+Mis=
+github.com/libra9z/mskit/v4 v4.3.6/go.mod h1:Yjla5H7FlLz/Y6zFIzGZY4iomYtOTXnnCnpETnWPFC0=
 github.com/libra9z/redistore v1.3.2 h1:RxvOhq7hBfrFktFMlxhUhilwfTTjoKTKfM+vpBG/Swk=
 github.com/libra9z/redistore v1.3.2/go.mod h1:Li2FJBlQ3nziESrWPcY1RUjS4jJHMUMJuOMPSAJO0t8=
 github.com/memcachier/mc v2.0.1+incompatible h1:s8EDz0xrJLP8goitwZOoq1vA/sm0fPS4X3KAF0nyhWQ=
