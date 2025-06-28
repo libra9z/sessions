@@ -11,7 +11,7 @@ require (
 	github.com/gorilla/context v1.1.1
 	github.com/gorilla/sessions v1.2.1
 	github.com/kidstuff/mongostore v0.0.0-20181113001930-e650cd85ee4b
-	github.com/libra9z/mskit/v4 v4.3.6
+	github.com/libra9z/mskit/v4 v4.3.8
 	github.com/libra9z/redistore v1.3.2
 	github.com/quasoft/memstore v0.0.0-20191010062613-2bce066d2b0b
 )
